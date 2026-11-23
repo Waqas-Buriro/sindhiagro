@@ -1,0 +1,7 @@
+{
+  "today": {
+    "sindhi_sambat": "10 ڄيٺ 1400",
+    "gregorian": "31 May 2026"
+  },
+  "note": "Temporary fixed date for MVP. Replace with Sindhi Calendar Engine in next build."
+}

@@ -1,0 +1,34 @@
+{
+  "type": "AdaptiveCard",
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.5",
+  "body": [
+    {
+      "type": "Container",
+      "style": "emphasis",
+      "items": [
+        {
+          "type": "Image",
+          "url": "assets/icons/icon-512.png",
+          "size": "Medium",
+          "horizontalAlignment": "Center"
+        },
+        {
+          "type": "TextBlock",
+          "text": "سنڌاڳڙو",
+          "weight": "Bolder",
+          "size": "ExtraLarge",
+          "horizontalAlignment": "Center",
+          "color": "Good"
+        },
+        {
+          "type": "TextBlock",
+          "text": "پوکن ۽ ٻنيءَ جي تازي رپورٽ",
+          "size": "Medium",
+          "horizontalAlignment": "Center",
+          "isSubtle": true
+        }
+      ]
+    }
+  ]
+}

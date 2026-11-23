@@ -1,0 +1,17 @@
+Hari Dost v1.4 Full Engineering Build
+
+Included:
+- Requested Sindhi UI text corrections
+- 10 ڄيٺ 1400 fixed date for MVP
+- Removed GPS note
+- Removed MVP Demo label
+- Sub-field 10m grid overlay demo
+- Green/yellow/orange/red/blue field health map
+- Layer switch: field health, heat stress, water/moisture
+- Farmer-friendly AI report
+- Glassy weather icons
+- PHP 7.3 compatible files
+- AMBILE font placeholders only
+
+Note:
+This build uses simulated grid coloring. Sentinel-2/NDMI/NDWI satellite integration should be added in v1.5.
