@@ -1,0 +1,18 @@
+{
+  "name": "sindhagro",
+  "version": "1.0.0",
+  "description": "سنڌاڳڙو — پوکن ۽ ٻنيءَ جي تازي رپورٽ",
+  "main": "index.html",
+  "scripts": {
+    "open:android": "npx cap open android",
+    "sync:android": "npx cap sync android"
+  },
+  "keywords": [
+    "sindh",
+    "agriculture",
+    "pwa",
+    "android"
+  ],
+  "author": "Sindhagro",
+  "license": "MIT"
+}

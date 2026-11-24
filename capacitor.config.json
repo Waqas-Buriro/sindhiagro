@@ -1,0 +1,12 @@
+{
+  "appId": "com.sindhagro.app",
+  "appName": "سنڌاڳڙو",
+  "webDir": "android/app/src/main/assets",
+  "bundledWebRuntime": false,
+  "android": {
+    "backgroundColor": "#0B3930"
+  },
+  "server": {
+    "androidScheme": "https"
+  }
+}

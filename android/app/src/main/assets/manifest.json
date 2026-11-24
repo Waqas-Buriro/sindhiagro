@@ -1,0 +1,77 @@
+{
+  "id": "/sindhagro/",
+  "name": "سنڌاڳڙو — پوکن ۽ ٻنيءَ جي تازي رپورٽ",
+  "short_name": "سنڌاڳڙو",
+  "description": "پوکن ۽ ٻنيءَ جي تازي رپورٽ، ھارين جي پنھنجي ٻوليءَ ۾",
+  "lang": "sd",
+  "dir": "rtl",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "background_color": "#ffffff",
+  "theme_color": "#0B3930",
+  "orientation": "any",
+  "categories": ["weather", "agriculture", "productivity"],
+  "icons": [
+    {
+      "src": "assets/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icons/icon-maskable-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "assets/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "منهنجيون ٻنيون",
+      "short_name": "ٻنيون",
+      "description": "محفوظ ڪيل ٻنيون ۽ نقشو ڏسو",
+      "url": "./index.html#farmsCard",
+      "icons": [{ "src": "assets/icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "موسم جو احوال",
+      "short_name": "موسم",
+      "description": "اڄ ۽ ايندڙ ڏينهن جي موسم",
+      "url": "./index.html#weatherCard",
+      "icons": [{ "src": "assets/icons/icon-192.png", "sizes": "192x192" }]
+    }
+  ],
+  "widgets": [
+    {
+      "name": "سنڌاڳڙو ويجٽ",
+      "short_name": "سنڌاڳڙو",
+      "description": "فصل ۽ موسم جو تڪڙو احوال هوم اسڪرين تي",
+      "tag": "sindhagro-summary-widget",
+      "template": "widget-template",
+      "ms_ac_template": "widget-template.json",
+      "data": "widget-data.json",
+      "type": "application/json",
+      "screenshots": [
+        {
+          "src": "assets/icons/widget-preview.png",
+          "sizes": "400x250",
+          "label": "سنڌاڳڙو هوم اسڪرين ويجٽ"
+        }
+      ]
+    }
+  ]
+}

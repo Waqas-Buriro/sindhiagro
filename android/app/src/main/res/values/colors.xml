@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="forest_green">#0B3930</color>
+    <color name="forest_green_dark">#09362D</color>
+    <color name="forest_green_light">#0D3C33</color>
+    <color name="white">#FFFFFF</color>
+    <color name="white_semi">#E6FFFFFF</color>
+    <color name="white_glass">#2EFFFFFF</color>
+    <color name="mint_accent">#A7D7C5</color>
+    <color name="mint_subtle">#EAF4F0</color>
+</resources>

@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="sd" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>سنڌاڳڙو — پوکن ۽ ٻنيءَ جي تازي رپورٽ</title>
+  <meta name="description" content="پوکن ۽ ٻنيءَ جي تازي رپورٽ، ھارين جي پنھنجي ٻوليءَ ۾">
+  <meta name="theme-color" content="#0B3930">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="assets/icons/icon-512.png">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="سنڌاڳڙو">
+  <meta name="application-name" content="سنڌاڳڙو">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIINfQInTT8MHP3MVN9WlSLBjd3oJdLmVgI=" crossorigin="">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+  <link rel="stylesheet" href="assets/css/style.css?v=2.4">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">سنڌاڳڙو</p>
+        <h1>سنڌاڳڙو</h1>
+        <p class="site-subheading">پوکن ۽ ٻنيءَ جي تازي رپورٽ، ھارين جي پنھنجي ٻوليءَ ۾</p>
+      </div>
+      <div class="topbar-pwa-wrap">
+        <div class="date-pill">
+          <strong id="sindhiMonth">ھلندڙ سنڌي مھينو: —</strong>
+          <span id="sindhiYear">سنڌي سنبت جو سال: —</span>
+          <span id="gregDate">—</span>
+        </div>
+        <button id="pwaInstallHeaderBtn" class="topbar-btn install-btn" type="button" style="display:none;">
+          <span>📲</span> <span>ايپ انسٽال ڪريو</span>
+        </button>
+        <button id="topbarWidgetBtn" class="topbar-btn widget-btn" type="button">
+          <span>✨</span> <span>هوم اسڪرين ويجٽ</span>
+        </button>
+      </div>
+    </header>
+
+    <main>
+
+      <section class="farms-card" id="farmsCard">
+        <div class="section-head">
+          <div>
+            <p class="card-kicker">منھنجيون ٻنيون</p>
+            <h2 id="farmPanelTitle">اوهان جون ٻنيون</h2>
+          </div>
+          <div class="farm-top-actions"><button id="addFarmBtn" class="soft-btn primary-action" type="button">➕ نئين ٻني داخل ڪريو</button><button id="clearAllFarmsBtn" class="soft-btn danger-action" type="button">🗑️ سڀ ٻنيون ختم ڪريو</button></div>
+        </div>
+        <div id="farmEmpty" class="farm-empty">
+          <strong>🌾 اڃا ڪا ٻني داخل ناهي</strong>
+          <span>ھيٺ “نئين ٻني داخل ڪريو” واري بٽڻ تي ڪلڪ ڪري پوءِ نقشي تي پنھنجي ٻنيءَ جون ڪنڊن تي چيچ سان نشان لڳايو.</span>
+        </div>
+        <div id="farmList" class="farm-list"></div>
+      </section>
+
+      <section class="map-card">
+        <div class="section-head">
+          <div>
+            <p class="card-kicker">اوھان جي لوڪيشن</p>
+            <h2 id="locationTitle">📍 لوڪيشن وٺجي پئي</h2>
+          </div>
+          <button id="locateBtn" class="soft-btn" type="button">لوڪيشن ٻيھر وٺو</button>
+        </div>
+
+        <div class="admin-location-card" id="adminLocationCard">
+          <div class="admin-card-title">📍 اوھان جي لوڪيشن</div>
+          <div class="admin-grid">
+            <div><span>ڊويزن:</span><strong>ڊيٽا لوڊ ٿي رهي آهي</strong></div>
+            <div><span>ضلعو:</span><strong>—</strong></div>
+            
+          </div>
+        </div>
+
+        
+        <div id="farmDrawGuide" class="farm-draw-guide hidden">
+          <strong>🌾 ٻنيءَ جي حد ٺاهيو</strong>
+          <span id="drawGuideText">map تي پهرين ڪنڊ تي دٻايو، پوءِ چؤڌاري باقي ڪنڊون لڳايو.</span>
+          <div class="draw-stats" id="drawStats">اڃا ڪا ڪنڊ لڳل ناهي</div>
+          <div class="draw-actions">
+            <button id="undoPointBtn" class="tool-btn" type="button">واپس ڪريو</button>
+            <button id="finishFarmBtn" class="tool-btn active" type="button">حد مڪمل ڪريو</button>
+            <button id="cancelFarmBtn" class="tool-btn" type="button">رد ڪريو</button>
+          </div>
+        </div>
+
+        
+        <div class="map-farm-action-bar" id="mapFarmActionBar">
+          <button id="addFarmBtnMap" class="soft-btn primary-action map-main-btn" type="button">🌾 نئين ٻني داخل ڪريو</button>
+          <button id="toggleMapViewBtn" class="soft-btn map-secondary-btn" type="button">🗺️ سادو نقشو</button>
+        </div>
+
+        <div class="map-wrap">
+
+        <div class="map-help-overlay" id="mapHelpOverlay">
+          <div class="map-help-icon">👆</div>
+          <div>
+            <strong>ٻني داخل ڪرڻ لاءِ پهرين “نئين ٻني داخل ڪريو” دٻايو</strong>
+            <span>نقشي تي ٻنيءَ جي ڪنڊن تي چيچ سان نشان لڳايو؛ هر ڪنڊ تي نشان ايندو.</span>
+          </div>
+        </div>
+        <div id="map"></div>
+        </div>
+
+        <div class="field-tools" id="satelliteTools">
+          <button class="tool-btn active" data-index="ndvi" id="btn-ndvi" type="button">🌿 ٻوٽن جي صحت</button>
+          <button class="tool-btn" data-index="ndwi" id="btn-ndwi" type="button">💧 پاڻي ۽ آلاڻ</button>
+          <button class="tool-btn" data-index="msavi" id="btn-msavi" type="button">🌱 ٻوٽن جو ڦوٽھڙو</button>
+          <button class="tool-btn" data-index="evi" id="btn-evi" type="button">🍃 گهاٽو فصل</button>
+          <button class="tool-btn" data-index="savi" id="btn-savi" type="button">🌾 فصل جي پکڙ</button>
+        </div>
+
+        <div id="legendBox" style="display:none; margin-top:12px;"></div>
+
+        <p class="map-overlay-note" id="mapOverlayNote">ٻني جي حد مڪمل ڪرڻ بعد سيٽلائيٽ تصوير ۽ رنگن جو اشارو ظاهر ٿيندو.</p>
+      </section>
+
+      <section class="hero-card status-good" id="heroCard">
+        <div class="status-icon" id="heroIcon">🌾</div>
+        <div class="hero-copy">
+          <p class="card-kicker">تازي سڌ سماءَ</p>
+          <h2 id="statusTitle">اوھان جي ٻنيءَ جي تازي رپورٽ</h2>
+          <div class="selected-farm-info hidden" id="selectedFarmInfo"></div>
+
+          <div class="smart-badges" id="smartBadges">
+            <span>📍 لوڪيشن وٺجي پئي</span>
+            <span>🌦️ موسم پڙهجي پئي</span>
+          </div>
+
+          <p id="statusLine1">ادا، اوهان جي لوڪيشن ۽ موسم جي تازي ڄاڻ وٺجي پئي.</p>
+          <p id="statusLine2">ٿوري دير ۾ ٻنيءَ لاءِ سادي سنڌي رپورٽ ڏيکاري ويندي.</p>
+          <p id="statusLine3">رنگن واري گرڊ موسم آڌار ٽيسٽنگ لاءِ آهي؛ حقيقي ٻنيءَ جي رنگت سيٽلائيٽ مرحلي ۾ ايندي.</p>
+          <p class="updated-at" id="updatedAt">آخري اپڊيٽ: —</p>
+        </div>
+      </section>
+
+      <section class="grid two-col">
+        <article class="info-card">
+          <p class="card-kicker">ٻنيءَ لاءِ تازي صلاح</p>
+          <h2>ھاريءَ لاءِ مددي ڄاڻ</h2>
+          <ul class="report-list" id="fieldInsights">
+            <li>حقيقي موسم اچڻ بعد هتي پاڻي، گرمي ۽ مينھن بابت صلاح ڏيکاري ويندي.</li>
+          </ul>
+        </article>
+
+        <article class="info-card wisdom-card">
+          <p class="card-kicker">پنھنجي لوڪ ڏاھپ</p>
+          <h2 id="wisdomTitle">ڄيٺي مينھن، پوڻيٺيءَ پُٽَ، ڪن ڀاڳ ڀرين کي مِلن!</h2>
+          <p id="wisdomText"></p>
+        </article>
+      </section>
+
+      <section class="info-card weather-card">
+        <div class="section-head">
+          <div>
+            <p class="card-kicker">ايندڙ ھفتي لاءِ موسم جي اڳڪٿي</p>
+            <h2>موسم جي رپورٽ</h2>
+          </div>
+        </div>
+        <div class="forecast-row" id="forecastRow">
+          <div class="day-card loading-card">
+            <div class="glass-icon">🌦️</div>
+            <strong>انتظار</strong>
+            <span>موسم پڙهجي پئي</span>
+          </div>
+        </div>
+      </section>
+
+
+      <div class="farm-modal hidden" id="farmModal" aria-hidden="true">
+        <div class="farm-modal-box">
+          <button class="modal-close" id="closeFarmModal" type="button">×</button>
+          <p class="card-kicker">نئين ٻني</p>
+          <h2>ٻنيءَ جي سادي ڄاڻ ڏيو</h2>
+
+          <label class="field-label" for="farmNameInput">ٻنيءَ جو نالو</label>
+          <input id="farmNameInput" class="farm-input" type="text" placeholder="مثال: ڪپھ واري ٻني">
+
+          <label class="field-label" for="cropSelect">فصل چونڊيو</label>
+          <select id="cropSelect" class="farm-input">
+            <option value="cotton" data-label="ڪپھ">ڪپھ</option>
+            <option value="wheat" data-label="ڪڻڪ">ڪڻڪ</option>
+            <option value="rice" data-label="چانور">چانور</option>
+            <option value="sugarcane" data-label="ڪمند">ڪمند</option>
+            <option value="orchard" data-label="باغ">باغ</option>
+            <option value="vegetables" data-label="ڀاڄيون">ڀاڄيون</option>
+          </select>
+
+          <p class="modal-help">اڳيون قدم: نقشي تي ٻنيءَ جي ڪنڊن تي چيچ سان نشان لڳائي حد ٺاهيو.</p>
+          <button id="startDrawBtn" class="soft-btn primary-action full-btn" type="button">حد ٺاهڻ شروع ڪريو</button>
+        </div>
+      </div>
+
+      <!-- Homescreen Widget Modal & Draggable Simulation -->
+      <div id="widgetModal" class="farm-modal hidden">
+        <div class="widget-modal-box">
+          <button class="modal-close" id="closeWidgetModal" type="button">×</button>
+          <p class="card-kicker">📲 هوم اسڪرين ويجٽ</p>
+          <h2>سنڌاڳڙو ويجٽ</h2>
+          <p class="widget-modal-subtitle">هن ويجٽ کي هوم اسڪرين تي رکي فصل ۽ موسم جو تڪڙو احوال سڌو اسڪرين تي ڏسو.</p>
+
+          <!-- Interactive Draggable Widget Card -->
+          <div class="widget-preview-area">
+            <div id="liveHomescreenWidget" class="homescreen-widget-card" draggable="true" title="هن کي ڇڪي ڏسو">
+              <div class="widget-top">
+                <div class="widget-brand">
+                  <img src="assets/icons/icon-192.png" alt="سنڌاڳڙو" class="widget-app-logo">
+                  <div class="widget-brand-text">
+                    <strong class="widget-app-name">سنڌاڳڙو</strong>
+                    <span class="widget-app-sub">زرعي ڄاڻ ۽ سيٽلائيٽ</span>
+                  </div>
+                </div>
+                <span class="widget-live-badge">🔴 لائيو</span>
+              </div>
+
+              <div class="widget-body">
+                <div class="widget-metric">
+                  <span class="widget-metric-label">سنڌي مھينو</span>
+                  <strong id="widgetSindhiDate">چيٽ 2083</strong>
+                </div>
+                <div class="widget-metric">
+                  <span class="widget-metric-label">موسم جو حال</span>
+                  <strong id="widgetWeatherCondition">☀️ 32°C صاف</strong>
+                </div>
+                <div class="widget-metric">
+                  <span class="widget-metric-label">ٻنيءَ جي حالت</span>
+                  <strong id="widgetCropHealth">🌿 صحتمند فصل</strong>
+                </div>
+              </div>
+
+              <div class="widget-footer">
+                <span class="widget-drag-hint">👆 هوم اسڪرين تي شامل ڪرڻ لاءِ هيٺ بٽڻ دٻايو</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="widget-actions">
+            <button id="pwaInstallModalBtn" class="soft-btn widget-install-btn full-btn" type="button">
+              📲 هوم اسڪرين تي ويجٽ / ايپ شامل ڪريو
+            </button>
+          </div>
+
+          <div class="widget-guide">
+            <div class="widget-guide-step">
+              <strong>🤖 Android / Chrome:</strong>
+              <span>مٿي ڏنل بٽڻ دٻايو، يا براؤزر مينيو مان <em>"Install app"</em> يا <em>"Add to Home screen"</em> تي ڪلڪ ڪريو.</span>
+            </div>
+            <div class="widget-guide-step">
+              <strong>🍎 iPhone / Safari:</strong>
+              <span>هيٺ شيئر بٽڻ (Share ⎋) تي ڪلڪ ڪري <em>"Add to Home Screen"</em> چونڊيو.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Floating Quick-Widget Button -->
+      <button id="floatingWidgetBtn" class="floating-widget-btn" type="button" title="هوم اسڪرين ويجٽ">
+        <span class="fw-icon">📲</span>
+        <span class="fw-text">هوم اسڪرين ويجٽ</span>
+      </button>
+
+      <footer>
+        <p>سيٽلائيٽ آسمان ۾، پر ڳالهه ھاري جي زبان ۾.</p>
+        <span>Sindhagro v2.4 PWA Edition</span>
+      </footer>
+    </main>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+  <script src="assets/js/app.js?v=2.4"></script>
+</body>
+</html>
